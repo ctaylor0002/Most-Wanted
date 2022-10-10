@@ -164,8 +164,19 @@ function displayPerson(person) {
  * @param {Object} person       A singular object from person database. 
  */
 
-function findPersonFamily(person) {
-    
+function findPersonFamily(person, people) {
+    let parents = people.filter(function (element) {
+        let personParentID = person.parents
+        if (element.id === (personParentID)) {
+            return true;
+        } else {
+            return false;
+        }
+    }).map(function (el) {
+        return `${el.firstName} ${el.lastName}`;
+    })
+
+    return parents;
 }
 
 
