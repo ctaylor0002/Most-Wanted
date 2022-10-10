@@ -237,12 +237,10 @@ function findPersonParents(person, people) {
         return `Parent: ${el.firstName} ${el.lastName}`;
     })
 
-    if (parents.length >= 1) {
-        return parents;
-    } else {
+    if (parents.length < 1) {
         parents.push('No Parents were found in our database.');
-        return parents;
     }
+        return parents;
 }
 
 function findSpouse(person, people) {
@@ -258,14 +256,10 @@ function findSpouse(person, people) {
         return `Spouse: ${el.firstName} ${el.lastName}`;
     })
     
-    if (foundSpouse.length >= 1) {
-        return foundSpouse;
-    } else {
+    if (foundSpouse.length < 1) {
         foundSpouse.push('No Spouse was found in our database.');
-        return foundSpouse;
-    }
-
-    
+    } 
+        return foundSpouse; 
 }
 
 function findSiblings(person, people) {
@@ -282,12 +276,11 @@ function findSiblings(person, people) {
         return `Sibling: ${el.firstName} ${el.lastName}`;
     })
 
-    if (siblings.length >= 1) {
-        return siblings;
-    } else {
+    if (siblings.length < 1) {
         siblings.push('No Siblings were found in our database.')
-        return siblings;
     }
+        return siblings;
+    
     
 }
 
