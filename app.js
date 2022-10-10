@@ -215,7 +215,7 @@ function findPersonFamily(person, people) {
     let spouse = findSpouse(person, people);
     console.log(spouse);
     let returnData = parents.concat(siblings, spouse).join("\n");
-    
+
     return returnData;
 }
 
@@ -240,7 +240,8 @@ function findPersonParents(person, people) {
     if (parents.length >= 1) {
         return parents;
     } else {
-        return 'No Parents were found in our database.';
+        parents.push('No Parents were found in our database.');
+        return parents;
     }
 }
 
@@ -257,8 +258,14 @@ function findSpouse(person, people) {
         return `Spouse: ${el.firstName} ${el.lastName}`;
     })
     
+    if (foundSpouse.length >= 1) {
+        return foundSpouse;
+    } else {
+        foundSpouse.push('No Spouse was found in our database.');
+        return foundSpouse;
+    }
 
-    return foundSpouse;
+    
 }
 
 function findSiblings(person, people) {
@@ -274,7 +281,14 @@ function findSiblings(person, people) {
     }).map(function (el) {
         return `Sibling: ${el.firstName} ${el.lastName}`;
     })
-    return siblings
+
+    if (siblings.length >= 1) {
+        return siblings;
+    } else {
+        siblings.push('No Siblings were found in our database.')
+        return siblings;
+    }
+    
 }
 
 function findBasedOnLastName(person, people) {
