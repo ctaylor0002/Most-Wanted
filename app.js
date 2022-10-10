@@ -208,14 +208,14 @@ function displayPerson(person) {
  */
 
 function findPersonFamily(person, people) {
-    let siblings = findBasedOnParentID(person, people);
+    let siblings = findSiblings(person, people);
     console.log(siblings);
     let parents = findPersonParents(person, people);
-    let siblingsAndSpouse = findPersonSiblingsAndSpouse(person, people);
-    let returnData = parents;
-    returnData.push(siblingsAndSpouse);
-    returnData.join("\n")
-
+    console.log(parents);
+    let spouse = findSpouse(person, people);
+    console.log(spouse);
+    let returnData = parents.concat(siblings, spouse).join("\n");
+    
     return returnData;
 }
 
@@ -227,7 +227,6 @@ function findPersonParents(person, people) {
             for(let i=0;i<=personParentID.length;i++) {
                 if (personParentID[i] === element.id) {
                     return true;
-                    break;
                 }
                  
             }
@@ -235,7 +234,7 @@ function findPersonParents(person, people) {
         }
 
     }).map(function (el) {
-        return ` Parent: ${el.firstName} ${el.lastName}`;
+        return `Parent: ${el.firstName} ${el.lastName}`;
     })
 
     if (parents.length >= 1) {
@@ -248,7 +247,7 @@ function findPersonParents(person, people) {
 function findSpouse(person, people) {
     
     //Instead of searching based on last name utilize the parents (In this dataset each child has both the same parents) Utilize includes and filter
-    let foundSpouse = people.filter(function (element) {
+    let foundSpouse = people.filter(function (el) {
         if (el.id === person.currentSpouse) {
             return true;
         } else {
@@ -259,7 +258,7 @@ function findSpouse(person, people) {
     })
     
 
-    return foundFamily;
+    return foundSpouse;
 }
 
 function findSiblings(person, people) {
