@@ -165,6 +165,15 @@ function displayPerson(person) {
  */
 
 function findPersonFamily(person, people) {
+    let parents = findPersonParents(person, people);
+    let siblingsAndSpouse = findPersonSiblingsAndSpouse(person, people);
+    let returnData = parents;
+    returnData.push(siblingsAndSpouse);
+
+    return returnData;
+}
+
+function findPersonParents(person, people) {
     let parents = people.filter(function (element) {
         let personParentID = person.parents
 
@@ -174,6 +183,7 @@ function findPersonFamily(person, people) {
                     return true;
                     break;
                 }
+                 
             }
             //let foundParents = searchParents(personParentID, element);
         }
@@ -183,7 +193,7 @@ function findPersonFamily(person, people) {
         //    return false;
         //}
     }).map(function (el) {
-        return ` Parent: ${el.firstName} ${el.lastName}`;
+        return ` Parent: ${el.firstName} ${el.lastName}\n`;
     })
 
     if (parents.length >= 1) {
@@ -192,6 +202,100 @@ function findPersonFamily(person, people) {
         return 'No Parents were found in our database.'
     }
 }
+
+function findPersonSiblingsAndSpouse(person, people) {
+    let foundSiblings = findBasedOnLastName(person, people);
+    let removePeople = person.parents;
+    removePeople.push(person.currentSpouse);
+    let foundFamily = foundSiblings.filter(function (element) {
+        for(let i=0; i<=removePeople.length; i++) {
+            if (person.parents[i] === element.id || person.id === element.id) {
+                return false;
+                break;
+            } else {
+                return true;
+            }
+        }
+    }).map(function (el) {
+        if (el.id === person.currentSpouse) {
+            return `Spouse: ${el.firstName} ${el.lastName}\n`;
+        } else {
+            return `Sibling: ${el.firstName} ${el.lastName}\n`;
+        }
+    })
+    
+
+    return foundFamily;
+}
+
+function findBasedOnLastName(person, people) {
+    let personLastName = person.lastName;
+    //let personSiblings = people.lastName.includes(personLastName);
+    let personSiblings = people.filter(function (el) {
+        if (el.lastName.includes(personLastName)) {
+            return true;
+        } else {
+            return false;
+        }
+   
+    }) 
+    return personSiblings;
+}
+            //I need to now search the spouse id and parent ids to exclude those people from the siblings
+        
+    // personSiblings = personSiblings.filter(function (el) {
+    //     let parentChk 
+    //             for(let i=0;i<=person.parents.length;i++) {
+    //                 if (person.parents[i] === element.id) {
+    //                     parentChk = 1 
+    //                 }
+                    
+    //             }
+                
+    //             if (parentChk = 1) {
+    //                 return false;
+    //             } else {
+    //                 return true;
+    //             }
+    //         })
+
+    //         personSiblings = personSiblings.filter(function (el) {
+    //             let spouseChk 
+    //             if (person.currentSpouse.length = 1) {
+    //                 if(person.currentSpouse === element.currentSpouse) {
+    //                     return false;
+    //                 } else {
+    //                     return true;
+    //                 }
+    //             }
+                
+    //             if (parentChk = 1) {
+    //                 return false;
+    //             } else {
+    //                 return true;
+    //             }
+    //         })
+
+
+    //     }
+
+        
+    
+
+    // personSiblings = personSiblings.filter(function (element) {
+    //     if (parents.length >= 1) {
+    //         for(let i=0;i<=parents.length;i++) {
+    //             if (parents[i] !== element.id) {
+    //                 return true;
+    //                 break;
+    //             }
+    //         }
+    //     }
+    // })
+
+
+    
+    
 
 //function searchParents(personParentID, currElement) {
 //    for(let i=0;i<personParentID.length;i++) {
