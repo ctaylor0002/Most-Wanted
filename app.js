@@ -137,6 +137,48 @@ function displayPeople(people) {
  * in order to easily send the information to the user in the form of an alert().
  * @param {Object} person       A singular object.
  */
+
+/**
+ * This function's purpose is twofold:
+ * First, to generate a prompt with the value passed in to the question parameter.
+ * Second, to ensure the user input response has been validated.
+ * @param {String} question     A string that will be passed into prompt().
+ * @param {Function} valid      A callback function used to validate basic user input.
+ * @returns {String}            The valid string input retrieved from the user.
+ */
+function promptFor(question, valid) {
+    do {
+        var response = prompt(question).trim();
+    } while (!response || !valid(response));
+    return response;
+}
+// End of promptFor()
+
+/**
+ * This helper function checks to see if the value passed into input is a "yes" or "no."
+ * @param {String} input        A string that will be normalized via .toLowerCase().
+ * @returns {Boolean}           The result of our condition evaluation.
+ */
+function yesNo(input) {
+    return input.toLowerCase() === "yes" || input.toLowerCase() === "no";
+}
+// End of yesNo()
+
+/**
+ * This helper function operates as a default callback for promptFor's validation.
+ * Feel free to modify this to suit your needs.
+ * @param {String} input        A string.
+ * @returns {Boolean}           Default validation -- no logic yet.
+ */
+function chars(input) {
+    return true; // Default validation only
+}
+// End of chars()
+
+//////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
+// Any additional functions can be written below this line 👇. Happy Coding! 😁
+
+
 function displayPerson(person) {
     //These two arrays are for looking up values from the person object and providing a more user friendly message
     let personInfoProperties = ["First Name:", "Last Name:", "ID:", "Gender:", "Date of Birth:", "Height:", "Weight:", "Eye Color:", "Occupation:"];
@@ -195,7 +237,7 @@ function findPersonParents(person, people) {
     if (parents.length >= 1) {
         return parents;
     } else {
-        return 'No Parents were found in our database.'
+        return 'No Parents were found in our database.';
     }
 }
 
@@ -239,41 +281,78 @@ function findBasedOnLastName(person, people) {
 }
 
 /**
- * This function's purpose is twofold:
- * First, to generate a prompt with the value passed in to the question parameter.
- * Second, to ensure the user input response has been validated.
- * @param {String} question     A string that will be passed into prompt().
- * @param {Function} valid      A callback function used to validate basic user input.
- * @returns {String}            The valid string input retrieved from the user.
+ * This function's purpose is to use recusion to find all people that are children of a specific parent.
+ * If any are applicable
+ * @param {Object} parent       Holds the Parent Object
+ * @param {Array} people        Holds the Database of People
  */
-function promptFor(question, valid) {
-    do {
-        var response = prompt(question).trim();
-    } while (!response || !valid(response));
-    return response;
-}
-// End of promptFor()
 
-/**
- * This helper function checks to see if the value passed into input is a "yes" or "no."
- * @param {String} input        A string that will be normalized via .toLowerCase().
- * @returns {Boolean}           The result of our condition evaluation.
- */
-function yesNo(input) {
-    return input.toLowerCase() === "yes" || input.toLowerCase() === "no";
-}
-// End of yesNo()
 
-/**
- * This helper function operates as a default callback for promptFor's validation.
- * Feel free to modify this to suit your needs.
- * @param {String} input        A string.
- * @returns {Boolean}           Default validation -- no logic yet.
- */
-function chars(input) {
-    return true; // Default validation only
+function findPersonDescendants(parent, people) {
+    //Come back to this part
 }
-// End of chars()
 
-//////////////////////////////////////////* End Of Starter Code *//////////////////////////////////////////
-// Any additional functions can be written below this line 👇. Happy Coding! 😁
+function searchByTraits(people) {
+    const props = Object.getOwnPropertyNames(people[0])
+    let searchValue = promptFor(
+        `Searching based on First Name? Enter '${props[0]}'\n`
+        `Searching based on Last Name? Enter '${props[1]}\n`
+        `Searching based on Gender? Enter '${props[2]}\n`
+        `Searching based on Date of Birth? Enter '${props[3]}\n`
+        `Searching based on Height? Enter '${props[4]}\n`
+        `Searching based on Weight? Enter '${props[5]}\n`
+        `Searching based on Eye Color? Enter '${props[6]}\n`
+        `Searching based on Occupation? Enter '${props[7]}\n`
+        `Searching based on Parents? Enter '${props[8]}\n`
+        `Searching based on Current Spouse? Enter '${props[9]}\n`,
+        chars
+        );
+        let searchResults;
+
+        switch (searchValue) {
+            case "firstName":
+    
+            case "lastName":
+
+            case "gender":
+            
+            case "dob":
+
+            case "height":
+
+            case "weight":
+
+            case "occupation":
+
+            case "parents":
+
+            case "currentSpouse":
+                
+        }
+
+
+
+
+
+    let searchType = promptFor(
+        "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
+        yesNo
+    ).toLowerCase();
+    let searchResults;
+    // Routes our application based on the user's input
+    switch (searchType) {
+        case "yes":
+            searchResults = searchByName(people);
+            break;
+        case "no":
+            //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
+                //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
+            searchResults = searchByTraits(people);
+            break;
+        default:
+            // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
+            app(people);
+            break;
+
+}
+}
