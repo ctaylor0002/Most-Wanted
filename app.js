@@ -139,17 +139,19 @@ function displayPeople(people) {
  */
 function displayPerson(person) {
     //These two arrays are for looking up values from the person object and providing a more user friendly message
-    let personInfoProperties = ["First Name:","Last Name:", "ID:", "Gender:", "Date of Birth:", "Height:", "Weight:", "Eye Color:", "Occupation:"];
-    let personInfoSearchProperties = ["firstName","lastName", "id", "gender", "dob", "height", "weight", "eyeColor", "occupation"];
+    let personInfoProperties = ["First Name:", "Last Name:", "ID:", "Gender:", "Date of Birth:", "Height:", "Weight:", "Eye Color:", "Occupation:"];
+    const props = Object.getOwnPropertyNames(person)
     let printString = "";
-    
+   
+    //I used a for loop however I don't quite know if that is the best method in this case
     for(let i=0; i<9; i++) {
-        let personVal = person[personInfoSearchProperties[i]];
+        let personVal = person[props[i]];
         let addString = `${personInfoProperties[i]} ${personVal}`;
         printString = `${printString}\n ${addString}`;
     }
-
-    alert(printString);
+    
+    //Return the printString Variable
+    return printString;
 
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
 }
