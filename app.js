@@ -292,9 +292,38 @@ function findPersonDescendants(parent, people) {
     //Come back to this part
 }
 
+function searchRequirements(people) {
+    let userCheck = promptFor("Would you like to add more traits to filter by? ('yes' or 'no' ", yesNo);
+    switch (userCheck) {
+        case "yes":
+            searchValue.push(promptFor(
+                `Searching based on id? Enter '${props[0]}'\n
+        Searching based on First Name? Enter '${props[1]}'\n
+        Searching based on Last Name? Enter '${props[2]}'\n
+        Searching based on Gender? Enter '${props[3]}'\n
+        Searching based on Date of Birth? Enter '${props[4]}'\n
+        Searching based on Height? Enter '${props[5]}'\n
+        Searching based on Weight? Enter '${props[6]}'\n
+        Searching based on Eye Color? Enter '${props[7]}'\n
+        Searching based on Occupation? Enter '${props[8]}'\n
+        Searching based on Parents? Enter '${props[9]}'\n
+        Searching based on Current Spouse? Enter '${props[10]}'\n`,
+                chars
+                ));
+        
+        case "no":
+            searchResults
+            
+    }
+
+    
+}
+
+
 function searchByTraits(people) {
     const props = Object.getOwnPropertyNames(people[0])
-    let searchValue = promptFor(
+    let searchValue;
+    searchValue.push(promptFor(
         `Searching based on id? Enter '${props[0]}'\n
 Searching based on First Name? Enter '${props[1]}'\n
 Searching based on Last Name? Enter '${props[2]}'\n
@@ -307,7 +336,12 @@ Searching based on Occupation? Enter '${props[8]}'\n
 Searching based on Parents? Enter '${props[9]}'\n
 Searching based on Current Spouse? Enter '${props[10]}'\n`,
         chars
-        );
+        ));
+
+        //if (searchValue.length < 5) {
+        //    searchRequirements(people);
+        //}
+
         let searchResults;
 
         switch (searchValue) {
