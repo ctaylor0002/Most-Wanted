@@ -185,13 +185,9 @@ function findPersonParents(person, people) {
                 }
                  
             }
-            //let foundParents = searchParents(personParentID, element);
+
         }
-        //if (element.id === (personParentID)) {
-        //    return true;
-        //} else {
-        //    return false;
-        //}
+
     }).map(function (el) {
         return ` Parent: ${el.firstName} ${el.lastName}\n`;
     })
@@ -230,7 +226,7 @@ function findPersonSiblingsAndSpouse(person, people) {
 
 function findBasedOnLastName(person, people) {
     let personLastName = person.lastName;
-    //let personSiblings = people.lastName.includes(personLastName);
+
     let personSiblings = people.filter(function (el) {
         if (el.lastName.includes(personLastName)) {
             return true;
@@ -241,72 +237,6 @@ function findBasedOnLastName(person, people) {
     }) 
     return personSiblings;
 }
-            //I need to now search the spouse id and parent ids to exclude those people from the siblings
-        
-    // personSiblings = personSiblings.filter(function (el) {
-    //     let parentChk 
-    //             for(let i=0;i<=person.parents.length;i++) {
-    //                 if (person.parents[i] === element.id) {
-    //                     parentChk = 1 
-    //                 }
-                    
-    //             }
-                
-    //             if (parentChk = 1) {
-    //                 return false;
-    //             } else {
-    //                 return true;
-    //             }
-    //         })
-
-    //         personSiblings = personSiblings.filter(function (el) {
-    //             let spouseChk 
-    //             if (person.currentSpouse.length = 1) {
-    //                 if(person.currentSpouse === element.currentSpouse) {
-    //                     return false;
-    //                 } else {
-    //                     return true;
-    //                 }
-    //             }
-                
-    //             if (parentChk = 1) {
-    //                 return false;
-    //             } else {
-    //                 return true;
-    //             }
-    //         })
-
-
-    //     }
-
-        
-    
-
-    // personSiblings = personSiblings.filter(function (element) {
-    //     if (parents.length >= 1) {
-    //         for(let i=0;i<=parents.length;i++) {
-    //             if (parents[i] !== element.id) {
-    //                 return true;
-    //                 break;
-    //             }
-    //         }
-    //     }
-    // })
-
-
-    
-    
-
-//function searchParents(personParentID, currElement) {
-//    for(let i=0;i<personParentID.length;i++) {
-//        if (personParentID[i] === currElement.id) {
-//            return true;
-//            break;
-//        } else {
-//            return false;
-//        }
-//    }
-//}
 
 /**
  * This function's purpose is twofold:
