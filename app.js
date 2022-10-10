@@ -182,9 +182,6 @@ function chars(input) {
 
 
 function displayPerson(person) {
-    //These two arrays are for looking up values from the person object and providing a more user friendly message
-
-    //Utilize .map instead of the for loop
     let personInfoProperties = ["First Name:", "Last Name:", "ID:", "Gender:", "Date of Birth:", "Height:", "Weight:", "Eye Color:", "Occupation:"];
     let personInfo = person.map(function (el) {
         return (`${personInfoProperties[0]} ${el.firstName}\n`+
@@ -195,19 +192,8 @@ function displayPerson(person) {
         `${personInfoProperties[5]} ${el.height}\n`+
         `${personInfoProperties[6]} ${el.weight}\n`+
         `${personInfoProperties[7]} ${el.eyeColor}\n`+
-        `${personInfoProperties[8]} ${el.occupation}\n`)
-        
+        `${personInfoProperties[8]} ${el.occupation}\n`);
     })
-   
-    //I used a for loop however I don't quite know if that is the best method in this case
-    /*
-    for(let i=0; i<9; i++) {
-        let personVal = person[props[i]];
-        let addString = `${personInfoProperties[i]} ${personVal}`;
-        printString = `${printString}\n ${addString}`;
-    }
-    */
-    //Return the printString Variable
     return personInfo;
 
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
@@ -222,6 +208,8 @@ function displayPerson(person) {
  */
 
 function findPersonFamily(person, people) {
+    let siblingTest = findBasedOnParentID(person, people);
+    console.log(siblingTest);
     let parents = findPersonParents(person, people);
     let siblingsAndSpouse = findPersonSiblingsAndSpouse(person, people);
     let returnData = parents;
@@ -258,7 +246,7 @@ function findPersonParents(person, people) {
 }
 
 function findPersonSiblingsAndSpouse(person, people) {
-
+    
     //Instead of searching based on last name utilize the parents (In this dataset each child has both the same parents) Utilize includes and filter
     let foundSiblings = findBasedOnLastName(person, people);
     let removePeople = person.parents;
@@ -282,6 +270,20 @@ function findPersonSiblingsAndSpouse(person, people) {
     
 
     return foundFamily;
+}
+
+function findBasedOnParentID(person, people) {
+    let siblings = people.filter(function (el) {
+        if (el.parents.includes(person.parents[0]) || el.parents.includes(person.parents[1])) {
+            if (el.id === person.id) {
+                return false;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    })
+    return siblings
 }
 
 function findBasedOnLastName(person, people) {
