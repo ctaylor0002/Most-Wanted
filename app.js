@@ -295,64 +295,90 @@ function findPersonDescendants(parent, people) {
 function searchByTraits(people) {
     const props = Object.getOwnPropertyNames(people[0])
     let searchValue = promptFor(
-        `Searching based on First Name? Enter '${props[0]}'\n`
-        `Searching based on Last Name? Enter '${props[1]}\n`
-        `Searching based on Gender? Enter '${props[2]}\n`
-        `Searching based on Date of Birth? Enter '${props[3]}\n`
-        `Searching based on Height? Enter '${props[4]}\n`
-        `Searching based on Weight? Enter '${props[5]}\n`
-        `Searching based on Eye Color? Enter '${props[6]}\n`
-        `Searching based on Occupation? Enter '${props[7]}\n`
-        `Searching based on Parents? Enter '${props[8]}\n`
-        `Searching based on Current Spouse? Enter '${props[9]}\n`,
+        `Searching based on id? Enter '${props[0]}'\n
+Searching based on First Name? Enter '${props[1]}'\n
+Searching based on Last Name? Enter '${props[2]}'\n
+Searching based on Gender? Enter '${props[3]}'\n
+Searching based on Date of Birth? Enter '${props[4]}'\n
+Searching based on Height? Enter '${props[5]}'\n
+Searching based on Weight? Enter '${props[6]}'\n
+Searching based on Eye Color? Enter '${props[7]}'\n
+Searching based on Occupation? Enter '${props[8]}'\n
+Searching based on Parents? Enter '${props[9]}'\n
+Searching based on Current Spouse? Enter '${props[10]}'\n`,
         chars
         );
         let searchResults;
 
         switch (searchValue) {
+            case "id":
+                searchResults = searchByProperty(people,props[0]);
+                alert(searchResults);
+                break;
             case "firstName":
-    
+                searchResults = searchByProperty(people,props[1]);
+                alert(searchResults);
+                break;
             case "lastName":
-
+                searchResults = searchByProperty(people,props[2]);
+                alert(searchResults);
+                break;
             case "gender":
-            
+                searchResults = searchByProperty(people,props[3]);
+                alert(searchResults);
+                break;
             case "dob":
-
+                searchResults = searchByProperty(people,props[4]);
+                alert(searchResults);
+                break;
             case "height":
-
+                searchResults = searchByProperty(people,props[5]);
+                alert(searchResults);
+                break;
             case "weight":
-
+                searchResults = searchByProperty(people,props[6]);
+                alert(searchResults);
+                break;
             case "occupation":
-
+                searchResults = searchByProperty(people,props[7]);
+                alert(searchResults);
+                break;
             case "parents":
-
+                searchResults = searchByProperty(people,props[8]);
+                alert(searchResults);
+                break;
             case "currentSpouse":
+                searchResults = searchByProperty(people,props[9]);
+                alert(searchResults);
+                break;
+            default:
+                app(people);
+                break;
                 
         }
 
-
-
-
-
-    let searchType = promptFor(
-        "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
-        yesNo
-    ).toLowerCase();
-    let searchResults;
-    // Routes our application based on the user's input
-    switch (searchType) {
-        case "yes":
-            searchResults = searchByName(people);
-            break;
-        case "no":
-            //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
-                //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByTraits(people);
-            break;
-        default:
-            // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
-            app(people);
-            break;
-
+        
 }
+
+function searchByProperty(people, property) {
+    let Value = prompt(`Enter ${property} Value: `)
+    let items = people.filter(function (el) {
+        try {
+            if(el[property].includes(Value)) {
+                return true;
+            } 
+        } catch (error) {
+            console.log(error);
+
+        } finally {
+            if(el[property] === parseInt(Value)) {
+                return true;
+            }
+        }
+        
+    }).map(function (el) {
+        return `${el.firstName} ${el.lastName}\n`;
+    })
+
+    return items;
 }
