@@ -167,18 +167,42 @@ function displayPerson(person) {
 function findPersonFamily(person, people) {
     let parents = people.filter(function (element) {
         let personParentID = person.parents
-        if (element.id === (personParentID)) {
-            return true;
-        } else {
-            return false;
+
+        if (personParentID.length >= 1) {
+            for(let i=0;i<=personParentID.length;i++) {
+                if (personParentID[i] === element.id) {
+                    return true;
+                    break;
+                }
+            }
+            //let foundParents = searchParents(personParentID, element);
         }
+        //if (element.id === (personParentID)) {
+        //    return true;
+        //} else {
+        //    return false;
+        //}
     }).map(function (el) {
-        return `${el.firstName} ${el.lastName}`;
+        return ` Parent: ${el.firstName} ${el.lastName}`;
     })
 
-    return parents;
+    if (parents.length >= 1) {
+        return parents;
+    } else {
+        return 'No Parents were found in our database.'
+    }
 }
 
+//function searchParents(personParentID, currElement) {
+//    for(let i=0;i<personParentID.length;i++) {
+//        if (personParentID[i] === currElement.id) {
+//            return true;
+//            break;
+//        } else {
+//            return false;
+//        }
+//    }
+//}
 
 /**
  * This function's purpose is twofold:
