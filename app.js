@@ -208,8 +208,8 @@ function displayPerson(person) {
  */
 
 function findPersonFamily(person, people) {
-    let siblingTest = findBasedOnParentID(person, people);
-    console.log(siblingTest);
+    let siblings = findBasedOnParentID(person, people);
+    console.log(siblings);
     let parents = findPersonParents(person, people);
     let siblingsAndSpouse = findPersonSiblingsAndSpouse(person, people);
     let returnData = parents;
@@ -245,34 +245,24 @@ function findPersonParents(person, people) {
     }
 }
 
-function findPersonSiblingsAndSpouse(person, people) {
+function findSpouse(person, people) {
     
     //Instead of searching based on last name utilize the parents (In this dataset each child has both the same parents) Utilize includes and filter
-    let foundSiblings = findBasedOnLastName(person, people);
-    let removePeople = person.parents;
-    removePeople.push(person.currentSpouse);
-    let foundFamily = foundSiblings.filter(function (element) {
-        for(let i=0; i<=removePeople.length; i++) {
-            if (person.parents[i] === element.id || person.id === element.id) {
-                return false;
-                break;
-            } else {
-                return true;
-            }
+    let foundSpouse = people.filter(function (element) {
+        if (el.id === person.currentSpouse) {
+            return true;
+        } else {
+            return false;
         }
     }).map(function (el) {
-        if (el.id === person.currentSpouse) {
-            return `Spouse: ${el.firstName} ${el.lastName}`;
-        } else {
-            return `Sibling: ${el.firstName} ${el.lastName}`;
-        }
+        return `Spouse: ${el.firstName} ${el.lastName}`;
     })
     
 
     return foundFamily;
 }
 
-function findBasedOnParentID(person, people) {
+function findSiblings(person, people) {
     let siblings = people.filter(function (el) {
         if (el.parents.includes(person.parents[0]) || el.parents.includes(person.parents[1])) {
             if (el.id === person.id) {
@@ -282,6 +272,8 @@ function findBasedOnParentID(person, people) {
         } else {
             return false;
         }
+    }).map(function (el) {
+        return `Sibling: ${el.firstName} ${el.lastName}`;
     })
     return siblings
 }
