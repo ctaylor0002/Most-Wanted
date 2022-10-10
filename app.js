@@ -158,6 +158,18 @@ function displayPerson(person) {
 // End of displayPerson()
 
 /**
+ * This function will be used to find the person's parent from the database.
+ * This will utilize a filter based on the passed in persons "parents" field.
+ * This will return the names of any parents found based on the id.
+ * @param {Object} person       A singular object from person database. 
+ */
+
+function findPersonFamily(person) {
+    
+}
+
+
+/**
  * This function's purpose is twofold:
  * First, to generate a prompt with the value passed in to the question parameter.
  * Second, to ensure the user input response has been validated.
