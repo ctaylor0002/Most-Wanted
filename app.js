@@ -66,7 +66,7 @@ function mainMenu(person, people) {
         case "info":
             //! TODO #1: Utilize the displayPerson function //////////////////////////////////////////
             // HINT: Look for a person-object stringifier utility function to help
-            let personInfo = displayPerson(person[0]);
+            let personInfo = displayPerson(person);
             alert(personInfo);
             break;
         case "family":
@@ -121,6 +121,8 @@ function searchByName(people) {
  * to the user in the form of an alert().
  * @param {Array} people        A collection of person objects.
  */
+
+//Utilize this setup for removing the commas in my arrays of my alerts
 function displayPeople(people) {
     alert(
         people
@@ -181,19 +183,32 @@ function chars(input) {
 
 function displayPerson(person) {
     //These two arrays are for looking up values from the person object and providing a more user friendly message
+
+    //Utilize .map instead of the for loop
     let personInfoProperties = ["First Name:", "Last Name:", "ID:", "Gender:", "Date of Birth:", "Height:", "Weight:", "Eye Color:", "Occupation:"];
-    const props = Object.getOwnPropertyNames(person)
-    let printString = "";
+    let personInfo = person.map(function (el) {
+        return (`${personInfoProperties[0]} ${el.firstName}\n`+
+        `${personInfoProperties[1]} ${el.lastName}\n`+
+        `${personInfoProperties[2]} ${el.id}\n`+
+        `${personInfoProperties[3]} ${el.gender}\n`+
+        `${personInfoProperties[4]} ${el.dob}\n`+
+        `${personInfoProperties[5]} ${el.height}\n`+
+        `${personInfoProperties[6]} ${el.weight}\n`+
+        `${personInfoProperties[7]} ${el.eyeColor}\n`+
+        `${personInfoProperties[8]} ${el.occupation}\n`)
+        
+    })
    
     //I used a for loop however I don't quite know if that is the best method in this case
+    /*
     for(let i=0; i<9; i++) {
         let personVal = person[props[i]];
         let addString = `${personInfoProperties[i]} ${personVal}`;
         printString = `${printString}\n ${addString}`;
     }
-    
+    */
     //Return the printString Variable
-    return printString;
+    return personInfo;
 
     //! TODO #1a: finish getting the rest of the information to display //////////////////////////////////////////
 }
@@ -211,6 +226,7 @@ function findPersonFamily(person, people) {
     let siblingsAndSpouse = findPersonSiblingsAndSpouse(person, people);
     let returnData = parents;
     returnData.push(siblingsAndSpouse);
+    returnData.join("\n")
 
     return returnData;
 }
@@ -231,7 +247,7 @@ function findPersonParents(person, people) {
         }
 
     }).map(function (el) {
-        return ` Parent: ${el.firstName} ${el.lastName}\n`;
+        return ` Parent: ${el.firstName} ${el.lastName}`;
     })
 
     if (parents.length >= 1) {
@@ -242,6 +258,8 @@ function findPersonParents(person, people) {
 }
 
 function findPersonSiblingsAndSpouse(person, people) {
+
+    //Instead of searching based on last name utilize the parents (In this dataset each child has both the same parents) Utilize includes and filter
     let foundSiblings = findBasedOnLastName(person, people);
     let removePeople = person.parents;
     removePeople.push(person.currentSpouse);
@@ -256,9 +274,9 @@ function findPersonSiblingsAndSpouse(person, people) {
         }
     }).map(function (el) {
         if (el.id === person.currentSpouse) {
-            return `Spouse: ${el.firstName} ${el.lastName}\n`;
+            return `Spouse: ${el.firstName} ${el.lastName}`;
         } else {
-            return `Sibling: ${el.firstName} ${el.lastName}\n`;
+            return `Sibling: ${el.firstName} ${el.lastName}`;
         }
     })
     
@@ -290,6 +308,8 @@ function findBasedOnLastName(person, people) {
 
 function findPersonDescendants(parent, people) {
     //Come back to this part
+
+    //I have to use recursion for the grandchildren
 }
 
 function searchRequirements(people) {
@@ -398,6 +418,7 @@ function searchByProperty(people, property) {
     let Value = prompt(`Enter ${property} Value: `)
     let items = people.filter(function (el) {
         try {
+            //Use a '===' to make sure its an exact match rather than 'includes'
             if(el[property].includes(Value)) {
                 return true;
             } 
