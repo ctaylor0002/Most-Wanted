@@ -294,10 +294,53 @@ function findSiblings(person, people) {
 
 
 function findPersonDescendants(parent, people) {
+    let subArray = findPersonDescendantsWithRecursion(parent, people);
+    let mappedDescendants = mapDescendants(subArray, parent);
+    return mappedDescendants;
+}
+
+function findPersonDescendantsWithRecursion(parent, people,  array = []) {
     //Come back to this part
 
     //I have to use recursion for the grandchildren
+
+    let subArray = people.filter(function (el) {
+        if (el.parents.includes(parent.id)) {
+            return true;
+        } else {
+            return false;
+        }
+    })
+
+    array = [parent];
+
+    if (subArray.length === 0) {
+        return  array;
+    }
+
+    for (let i=0; i<subArray.length; i++) {
+        array = array.concat (findPersonDescendantsWithRecursion(subArray[i], people));
+    }
+    
+    return array;
+    
 }
+function mapDescendants(array, parent) {
+    array = array.filter(function (el) {
+        if (el.id === parent.id) {
+            return false;
+        } else {
+            return true;
+        }
+    }).map(function (el) {
+        return `${el.firstName} ${el.lastName}`
+    })
+    array = array.join("\n");
+    return array;
+
+}
+
+
 
 function searchByTraits(people) {
     let counter = 0;
@@ -327,58 +370,36 @@ function searchByTraits(people) {
         switch (searchValue) {
             case "id":
                 filteredUsers = searchByProperty(filteredUsers,props[0]);
-                console.log(filteredUsers);
-                //alert(filteredUsers);
                 break;
             case "firstName":
                 filteredUsers = searchByProperty(filteredUsers,props[1]);
-                console.log(filteredUsers);
-                //alert(filteredUsers);
                 break;
             case "lastName":
                 filteredUsers = searchByProperty(filteredUsers,props[2]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "gender":
                 filteredUsers = searchByProperty(filteredUsers,props[3]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "dob":
                 filteredUsers = searchByProperty(filteredUsers,props[4]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "height":
                 filteredUsers = searchByProperty(filteredUsers,props[5]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "weight":
                 filteredUsers = searchByProperty(filteredUsers,props[6]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "eyeColor":
                 filteredUsers = searchByProperty(filteredUsers,props[7]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "occupation":
                 filteredUsers = searchByProperty(filteredUsers,props[8]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "parents":
                 filteredUsers = searchByProperty(filteredUsers,props[9]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             case "currentSpouse":
                 filteredUsers = searchByProperty(filteredUsers,props[10]);
-                //alert(filteredUsers);
-                console.log(filteredUsers);
                 break;
             default:
                 app(people);
@@ -422,133 +443,3 @@ function searchByProperty(people, property) {
     })
     return items;
 }
-/*
-function searchRequirements(people) {
-    let userCheck = promptFor("Would you like to add more traits to filter by? ('yes' or 'no' ", yesNo);
-    switch (userCheck) {
-        case "yes":
-            searchValue.push(promptFor(
-                `Searching based on id? Enter '${props[0]}'\n` +
-                `Searching based on First Name? Enter '${props[1]}'\n` +
-                `Searching based on Last Name? Enter '${props[2]}'\n` +
-                `Searching based on Gender? Enter '${props[3]}'\n` +
-                `Searching based on Date of Birth? Enter '${props[4]}'\n` +
-                `Searching based on Height? Enter '${props[5]}'\n` +
-                `Searching based on Weight? Enter '${props[6]}'\n` +
-                `Searching based on Eye Color? Enter '${props[7]}'\n` +
-                `Searching based on Occupation? Enter '${props[8]}'\n` +
-                `Searching based on Parents? Enter '${props[9]}'\n` +
-                `Searching based on Current Spouse? Enter '${props[10]}'\n`,
-                chars
-            ));
-
-            if (searchValue.length = 5) {
-                let results = searchByProperty(people, searchValue);
-            }
-        
-        case "no":
-            searchResults
-            
-    }
-
-
-    
-}
-
-
-function searchByTraits(people) {
-    const props = Object.getOwnPropertyNames(people[0])
-    let searchValue;
-    searchValue = (promptFor(
-        `Searching based on id? Enter '${props[0]}'\n` +
-        `Searching based on First Name? Enter '${props[1]}'\n` +
-        `Searching based on Last Name? Enter '${props[2]}'\n` +
-        `Searching based on Gender? Enter '${props[3]}'\n` +
-        `Searching based on Date of Birth? Enter '${props[4]}'\n` +
-        `Searching based on Height? Enter '${props[5]}'\n` +
-        `Searching based on Weight? Enter '${props[6]}'\n` +
-        `Searching based on Eye Color? Enter '${props[7]}'\n` +
-        `Searching based on Occupation? Enter '${props[8]}'\n` +
-        `Searching based on Parents? Enter '${props[9]}'\n` +
-        `Searching based on Current Spouse? Enter '${props[10]}'\n`,
-        chars
-        ));
-
-        // if (searchValue.length < 5) {
-        //     searchRequirements(people);
-        // }
-
-        let searchResults;
-
-        switch (searchValue) {
-            case "id":
-                searchResults = searchByProperty(people,props[0]);
-                alert(searchResults);
-                break;
-            case "firstName":
-                searchResults = searchByProperty(people,props[1]);
-                alert(searchResults);
-                break;
-            case "lastName":
-                searchResults = searchByProperty(people,props[2]);
-                alert(searchResults);
-                break;
-            case "gender":
-                searchResults = searchByProperty(people,props[3]);
-                alert(searchResults);
-                break;
-            case "dob":
-                searchResults = searchByProperty(people,props[4]);
-                alert(searchResults);
-                break;
-            case "height":
-                searchResults = searchByProperty(people,props[5]);
-                alert(searchResults);
-                break;
-            case "weight":
-                searchResults = searchByProperty(people,props[6]);
-                alert(searchResults);
-                break;
-            case "occupation":
-                searchResults = searchByProperty(people,props[7]);
-                alert(searchResults);
-                break;
-            case "parents":
-                searchResults = searchByProperty(people,props[8]);
-                alert(searchResults);
-                break;
-            case "currentSpouse":
-                searchResults = searchByProperty(people,props[9]);
-                alert(searchResults);
-                break;
-            default:
-                app(people);
-                break;
-                
-        }
-
-        
-}
-
-
-        // try {
-        //     //Use a '===' to make sure its an exact match rather than 'includes'
-        //     if(el[property].includes(Value)) {
-        //         return true;
-        //     } 
-        // } catch (error) {
-        //     console.log(error);
-
-        // } finally {
-        //     if(el[property] === parseInt(Value)) {
-        //         return true;
-        //     }
-        // }
-        
-    }).map(function (el) {
-        return `${el.firstName} ${el.lastName}`;
-    })
-    items = items.join("\n");
-    return items;
-}
-*/
