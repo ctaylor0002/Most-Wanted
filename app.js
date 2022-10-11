@@ -401,8 +401,13 @@ function searchByTraits(people) {
     filteredUsers = filteredUsers.map(function (el) {
         return `${el.firstName} ${el.lastName}`;
     })
-    filteredUsers = filteredUsers.join("\n");
-    alert(filteredUsers);
+
+    if (filteredUsers.length === 0) {
+        alert("No Users were found with that criteria.");
+    } else {
+        filteredUsers = filteredUsers.join("\n");
+        alert(filteredUsers);
+    }
 }
 
 function searchByProperty(people, property) {
