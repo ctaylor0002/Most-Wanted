@@ -415,7 +415,7 @@ function searchByTraits(people) {
 
         //filteredUsers = searchByProperty(filteredUsers, searchValue);
         
-        let question = prompt("Would you like to add more filters? ('yes' or 'no')", yesNo)
+        let question = promptFor("Would you like to add more filters? ('yes' or 'no')", yesNo).toLowerCase();
 
         switch (question) {
             case "yes":
