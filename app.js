@@ -335,8 +335,14 @@ function mapDescendants(array, parent) {
     }).map(function (el) {
         return `${el.firstName} ${el.lastName}`
     })
-    array = array.join("\n");
-    return array;
+
+
+    if (array.length === 0) {
+        return "No Children were found in our database."
+    } else {
+        array = array.join("\n");
+        return array;
+    }
 
 }
 
